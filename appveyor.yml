@@ -1,0 +1,46 @@
+version: 1.{build}.0
+image: Visual Studio 2017 Preview
+branches:
+  only:
+  - master
+configuration: Release
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+init:
+- cmd: git config --global core.autocrlf true
+install:
+- ps: >-
+    #get preview SDK
+    mkdir -Force ".\scripts\obtain\" | Out-Null
+    Invoke-WebRequest "https://github.com/dotnet/cli/blob/release/2.1.3xx/scripts/obtain/dotnet-install.ps1" -OutFile ".\scripts\obtain\install.ps1"
+    #install SDK
+    $env:DOTNET_INSTALL_DIR = "$pwd\.dotnetcli"
+    '& .\scripts\obtain\install.ps1'
+    $env:Path = "$env:DOTNET_INSTALL_DIR;$env:Path"
+    #show version
+    dotnet --version
+before_build:
+- ps: dotnet restore
+build_script:
+- ps: dotnet publish ./src/BlazinPomodoro.Server/BlazinPomodoro.Server.csproj
+artifacts:
+- path: src\BlazinPomodoro.Server\bin\release\netcoreapp2.0\publish
+  name: WebSite
+  type: WebDeployPackage
+deploy:
+- provider: WebDeploy
+  server: https://blazinpomodorosample.scm.azurewebsites.net:443/msdeploy.axd?site=<msdeploySite>
+  website: BlazinPomodoroSample
+  username: $BlazinPomodoroSample
+  password:
+    secure: KwJhEla2EtLaGJJaaz/bRnoz/5uVXRLy5IOB/TMh/c0mOLST+gAGULlSg9AbjEjV69x/me5E42WYzrtha0T0WA==
+  artifact: WebSite
+  aspnet_core: true
+  app_offline: true
+  aspnet_core_force_restart: true

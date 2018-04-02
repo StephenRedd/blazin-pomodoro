@@ -1,4 +1,7 @@
-﻿<div class='main-nav'>
+﻿@using System.Reflection
+@using System.Runtime.InteropServices
+@using BlazinPomodoro.Client
+<div class='main-nav'>
     <div class='navbar navbar-inverse'>
         <div class='navbar-header'>
             <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
@@ -7,7 +10,7 @@
                 <span class='icon-bar'></span>
                 <span class='icon-bar'></span>
             </button>
-            <a class='navbar-brand' href='/'>BlazinPomodoro</a>
+            <a class='navbar-brand' href='/'>BlazinPomodoro @Version</a>
         </div>
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse'>
@@ -31,3 +34,7 @@
         </div>
     </div>
 </div>
+@functions{
+
+    public string Version => typeof(Program).GetTypeInfo().Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
+}
