@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazinPomodoro.Client", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazinPomodoro.Server", "src\BlazinPomodoro.Server\BlazinPomodoro.Server.csproj", "{DFEE44BD-0224-474A-8807-FF5F2FF91D56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazinPomodoro.Server.Tests", "test\BlazinPomodoro.Server.Tests\BlazinPomodoro.Server.Tests.csproj", "{E6EAAB8C-94D3-4412-8E06-522F2180EBCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{DFEE44BD-0224-474A-8807-FF5F2FF91D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFEE44BD-0224-474A-8807-FF5F2FF91D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFEE44BD-0224-474A-8807-FF5F2FF91D56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6EAAB8C-94D3-4412-8E06-522F2180EBCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6EAAB8C-94D3-4412-8E06-522F2180EBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6EAAB8C-94D3-4412-8E06-522F2180EBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6EAAB8C-94D3-4412-8E06-522F2180EBCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{3EA335B9-2A9B-4A48-9339-6A39EF9799C0} = {031A12EA-42EB-4342-836A-9AEC623B64EB}
 		{087A2795-F1F6-4DB3-BA33-D14E5E8939DC} = {031A12EA-42EB-4342-836A-9AEC623B64EB}
 		{DFEE44BD-0224-474A-8807-FF5F2FF91D56} = {031A12EA-42EB-4342-836A-9AEC623B64EB}
+		{E6EAAB8C-94D3-4412-8E06-522F2180EBCA} = {949CF5E9-1F09-4559-AD34-C85721124CEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D6E1479-A136-4AFB-95BC-2543D3DBC51B}
