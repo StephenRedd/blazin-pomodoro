@@ -16,4 +16,16 @@
     <ProjectReference Include="..\BlazinPomodoro.Shared\BlazinPomodoro.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Todo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Todo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Todo.cshtml" />
+  </ItemGroup>
+
 </Project>

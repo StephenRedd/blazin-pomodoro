@@ -4,7 +4,7 @@ An experimental task-list with pomodoro timer features, written for [Microsoft's
 
 [![Shipping faster with ZenHub](https://cdn.rawgit.com/ZenHubIO/support/master/zenhub-badge.svg)](https://zenhub.com)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5lhjs3c6sfq4h726?svg=true)](https://ci.appveyor.com/project/StephenRedd/blazin-pomodoro)|
+[![Build status](https://ci.appveyor.com/api/projects/status/5lhjs3c6sfq4h726?svg=true)](https://ci.appveyor.com/project/StephenRedd/blazin-pomodoro)
 
 # Overview
 
