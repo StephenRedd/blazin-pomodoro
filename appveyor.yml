@@ -33,6 +33,36 @@ artifacts:
 - path: src\BlazinPomodoro.Server\bin\release\netcoreapp2.0\publish
   name: WebSite
   type: WebDeployPackage
+test_script:
+- ps: >-
+  $rootDir = Get-Location
+  $srcDir = Get-ChildItem ./src
+  # loop through projects and collect src and test project paths
+  foreach ($folder in $srcDir) {
+      $p = Join-Path -Path $folder.FullName -ChildPath '*.csproj';
+      # only src project folders -> folders with a csproj file
+      if (Test-Path $p -PathType Leaf) {
+          $projectFolders += $folder.FullName
+          # find the test project, if one exists, and run each
+          $testFolderPath = ".\test\" + $folder.Name + ".Tests"
+          if (Test-Path $testFolderPath -PathType Container){
+              $x = Join-Path -Path $testFolderPath -ChildPath 'xunit.runner.json';
+              if (Test-Path $x -PathType Leaf) {
+                  $testFolders += $testFolderPath
+              }
+          }
+      }
+  }
+  # run tests first
+  foreach($testFolder in $testFolders){
+      Write-Output ""
+      Write-Output "--------"
+      Write-Output "testing : $testFolder"
+      Write-Output "--------"
+      Set-Location $testFolder
+      exec { & dotnet xunit -configuration Release -trait "TestType=Unit" }
+      Set-Location $rootDir
+  }
 deploy:
 - provider: WebDeploy
   server: https://blazinpomodorosample.scm.azurewebsites.net:443/msdeploy.axd?site=<msdeploySite>
