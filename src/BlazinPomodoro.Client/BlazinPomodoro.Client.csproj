@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazinPomodoro.Shared\BlazinPomodoro.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

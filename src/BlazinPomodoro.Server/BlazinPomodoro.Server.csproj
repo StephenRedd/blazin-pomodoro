@@ -9,4 +9,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="0.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazinPomodoro.Client\BlazinPomodoro.Client.csproj" />
+    <ProjectReference Include="..\BlazinPomodoro.Shared\BlazinPomodoro.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

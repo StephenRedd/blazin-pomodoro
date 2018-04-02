@@ -3,11 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27520.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazinPomodoro.Server", "BlazinPomodoro\BlazinPomodoro.Server\BlazinPomodoro.Server.csproj", "{D08D5409-2F5D-4BAF-AFEB-4D65F285F27B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{031A12EA-42EB-4342-836A-9AEC623B64EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazinPomodoro.Client", "BlazinPomodoro\BlazinPomodoro.Client\BlazinPomodoro.Client.csproj", "{2EF542A8-1B22-4936-84A0-5B154FBA6457}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{949CF5E9-1F09-4559-AD34-C85721124CEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazinPomodoro.Shared", "BlazinPomodoro\BlazinPomodoro.Shared\BlazinPomodoro.Shared.csproj", "{744F43C7-94F3-4373-BCA6-74BD916B652C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{86B07A59-975C-4ED1-89BB-D886C03AF3DB}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazinPomodoro.Shared", "src\BlazinPomodoro.Shared\BlazinPomodoro.Shared.csproj", "{3EA335B9-2A9B-4A48-9339-6A39EF9799C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazinPomodoro.Client", "src\BlazinPomodoro.Client\BlazinPomodoro.Client.csproj", "{087A2795-F1F6-4DB3-BA33-D14E5E8939DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazinPomodoro.Server", "src\BlazinPomodoro.Server\BlazinPomodoro.Server.csproj", "{DFEE44BD-0224-474A-8807-FF5F2FF91D56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,21 +24,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D08D5409-2F5D-4BAF-AFEB-4D65F285F27B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D08D5409-2F5D-4BAF-AFEB-4D65F285F27B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D08D5409-2F5D-4BAF-AFEB-4D65F285F27B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D08D5409-2F5D-4BAF-AFEB-4D65F285F27B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EF542A8-1B22-4936-84A0-5B154FBA6457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EF542A8-1B22-4936-84A0-5B154FBA6457}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EF542A8-1B22-4936-84A0-5B154FBA6457}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EF542A8-1B22-4936-84A0-5B154FBA6457}.Release|Any CPU.Build.0 = Release|Any CPU
-		{744F43C7-94F3-4373-BCA6-74BD916B652C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{744F43C7-94F3-4373-BCA6-74BD916B652C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{744F43C7-94F3-4373-BCA6-74BD916B652C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{744F43C7-94F3-4373-BCA6-74BD916B652C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EA335B9-2A9B-4A48-9339-6A39EF9799C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EA335B9-2A9B-4A48-9339-6A39EF9799C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EA335B9-2A9B-4A48-9339-6A39EF9799C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EA335B9-2A9B-4A48-9339-6A39EF9799C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{087A2795-F1F6-4DB3-BA33-D14E5E8939DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{087A2795-F1F6-4DB3-BA33-D14E5E8939DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{087A2795-F1F6-4DB3-BA33-D14E5E8939DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{087A2795-F1F6-4DB3-BA33-D14E5E8939DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFEE44BD-0224-474A-8807-FF5F2FF91D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFEE44BD-0224-474A-8807-FF5F2FF91D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFEE44BD-0224-474A-8807-FF5F2FF91D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFEE44BD-0224-474A-8807-FF5F2FF91D56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3EA335B9-2A9B-4A48-9339-6A39EF9799C0} = {031A12EA-42EB-4342-836A-9AEC623B64EB}
+		{087A2795-F1F6-4DB3-BA33-D14E5E8939DC} = {031A12EA-42EB-4342-836A-9AEC623B64EB}
+		{DFEE44BD-0224-474A-8807-FF5F2FF91D56} = {031A12EA-42EB-4342-836A-9AEC623B64EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D6E1479-A136-4AFB-95BC-2543D3DBC51B}
