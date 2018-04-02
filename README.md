@@ -1,21 +1,31 @@
 # Blazin' Pomodoro
 
-An experimental task-list with pomodoro timer features, written for Microsoft's Blazor framework.
+An experimental task-list with pomodoro timer features, written for [Microsoft's Blazor](https://github.com/aspnet/Blazor) framework.
 
+[![Shipping faster with ZenHub](https://cdn.rawgit.com/ZenHubIO/support/master/zenhub-badge.svg)](https://zenhub.com)
 
-[<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzQiIGhlaWdo
-dD0iMjAiPjxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj48c3RvcCBvZmZz
-ZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiLz48c3RvcCBvZmZzZXQ9
-IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz48L2xpbmVhckdyYWRpZW50PjxtYXNrIGlkPSJhIj48cmVj
-dCB3aWR0aD0iMTc0IiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iI2ZmZiIvPjwvbWFzaz48ZyBt
-YXNrPSJ1cmwoI2EpIj48cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDEyMXYyMEgweiIvPjxwYXRo
-IGZpbGw9IiMzRjREOUMiIGQ9Ik0xMjEgMGg1M3YyMGgtNTN6Ii8+PHBhdGggZmlsbD0idXJsKCNi
-KSIgZD0iTTAgMGgxNzR2MjBIMHoiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1p
-ZGRsZSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLFZlcmRhbmEsR2VuZXZhLHNhbnMtc2VyaWYi
-IGZvbnQtc2l6ZT0iMTEiPjx0ZXh0IHg9IjYwLjUiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxs
-LW9wYWNpdHk9Ii4zIj5TaGlwcGluZyBmYXN0ZXIgd2l0aDwvdGV4dD48dGV4dCB4PSI2MC41IiB5
-PSIxNCI+U2hpcHBpbmcgZmFzdGVyIHdpdGg8L3RleHQ+PHRleHQgeD0iMTQ2LjUiIHk9IjE1IiBm
-aWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj5aZW5IdWI8L3RleHQ+PHRleHQgeD0iMTQ2
-LjUiIHk9IjE0Ij5aZW5IdWI8L3RleHQ+PC9nPjwvc3ZnPg==" />](https://zenhub.com)
+[![Build status](https://ci.appveyor.com/api/projects/status/5lhjs3c6sfq4h726?svg=true)](https://ci.appveyor.com/project/StephenRedd/blazin-pomodoro)|
 
+# Overview
 
+Basically, this is the stock ASP.NET hosted blazor sample template, with the TODO list from the blazor [getting started walkthrough](https://blogs.msdn.microsoft.com/webdev/2018/03/22/get-started-building-net-web-apps-in-the-browser-with-blazor) combined with a custom pomodoro timer of my own. 
+
+## Online Sample
+
+An [online demo](https://blazinpomodorosample.azurewebsites.net) has been posted to Azure as an App Service.
+
+## Running locally
+
+You will need the latest dotnet SDK, VS 2017 preview, and extensions to work with this project locally. 
+
+Follow the three simple ['Getting Started' steps from the Blazor README.md here](https://github.com/aspnet/Blazor#getting-started). 
+
+## Implementation Notes:
+
+- As I am not particularly familiar with the Pomorodo techniques for time management, and it isn't a time management system I would every personally use, I make no guarantees about the sanity of the implemenation here. The 'business rules', such as they are, were based on about 10 minutes of online research on the technique.
+
+- This is a single instance application; and would not function correctly in a multi-node deployment environment.
+
+- LiteDB is used for simplicity, and to avoid an external dependency on an external data store.
+
+- It seems out-of-box Docker support is a bit wonky for this stack; I could probably work out the kinks with some time, but it hardly seemed worth the effort given the preview nature of this tech stack. Instead, I chose to use Appveyor for CI builds and target the deployments to a simple Azure App Services instance.
