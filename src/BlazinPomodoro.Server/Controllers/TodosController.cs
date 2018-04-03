@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlazinPomodoro.Server.Services;
 using BlazinPomodoro.Shared;
+using LiteDB;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazinPomodoro.Server.Controllers
@@ -10,50 +12,54 @@ namespace BlazinPomodoro.Server.Controllers
     [Route("api/[controller]")]
     public class TodosController : Controller
     {
+        private ITodoService Service { get; }
+
+        public TodosController(ITodoService todoService)
+        {
+            Service = todoService;
+        }
+
         [HttpGet]
-        public IEnumerable<TodoItem> Get()
+        public IActionResult Get()
         {
-            return new [] {
-                new TodoItem
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Generated item",
-                    CompletedOn = null,
-                    CreatedOn = DateTimeOffset.Now.AddHours(-2)
-                },
-                new TodoItem
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Generated completed item",
-                    CompletedOn = DateTimeOffset.Now.AddHours(-1),
-                    CreatedOn = DateTimeOffset.Now.AddHours(-2)
-                }
-            };
+            return Ok(Service.GetAllItems());
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetToDoById")]
+        public IActionResult Get(Guid id)
         {
-            return "value";
+            var item = Service.GetItem(id);
+            return item == null ? (IActionResult)NotFound() : Ok(item);
+
         }
 
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpPost()]
+        public IActionResult Post([FromBody]TodoItem item)
         {
+            var res = Service.SaveItem(item)
+                ? Created(new Uri($"/api/todos/{item.Id}", UriKind.Relative), item)
+                : (IActionResult)StatusCode(500);
+            return res;
         }
 
-        // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(Guid id, [FromBody]TodoItem item)
         {
+
+            var res = id == item.Id && Service.GetItem(id) != null //ids match and item exists
+                ? Service.SaveItem(item)
+                    ? Ok(item)
+                    : (IActionResult)StatusCode(500)
+                : BadRequest();
+            return res;
+
         }
 
-        // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(Guid id)
         {
+
+            return Service.DeleteItem(id) ? (IActionResult)NoContent(): BadRequest();
         }
     }
 }

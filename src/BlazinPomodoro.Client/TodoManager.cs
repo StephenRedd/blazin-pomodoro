@@ -27,8 +27,16 @@ namespace BlazinPomodoro.Client
         public async Task<TodoItem> ToggleCompleteTodoAsync(TodoItem item)
         {
             item.CompletedOn = item.CompletedOn.HasValue ? (DateTimeOffset?) null : DateTimeOffset.Now;
-            await Client.PutJsonAsync($"api/todos/{item.Id}", item);
-            return item;
+
+            var result = await Client.PutAsync($"api/todos/{item.Id}",
+                new StringContent(JsonUtil.Serialize(item), Encoding.UTF8, "application/json"));
+            return await TodoItemFromHttpResponseAsync(result);
+        }
+
+        public async Task<bool> DeleteTodoAsync(TodoItem item)
+        {
+            var result = await Client.DeleteAsync($"api/todos/{item.Id}");
+            return result.IsSuccessStatusCode;
         }
 
         public async Task<TodoItem> AddTodoAsync(string title)
@@ -40,8 +48,20 @@ namespace BlazinPomodoro.Client
                 CreatedOn = DateTimeOffset.Now,
                 CompletedOn = null
             };
-            await Client.PostJsonAsync($"api/todos", item);
-            return item;
+            var result = await Client.PostAsync($"api/todos",
+                new StringContent(JsonUtil.Serialize(item), Encoding.UTF8, "application/json"));
+            return await TodoItemFromHttpResponseAsync(result);
+        }
+
+        private async Task<TodoItem> TodoItemFromHttpResponseAsync(HttpResponseMessage message)
+        {
+            TodoItem result = null;
+            if (message.IsSuccessStatusCode)
+            {
+                result = JsonUtil.Deserialize<TodoItem>(await message.Content.ReadAsStringAsync());
+            }
+
+            return result;
         }
     }
 }

@@ -19,6 +19,9 @@
                         <span class=@(todo.IsDone ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-ok glyphicon-hide")></span>
                     </button>
                     <span class=@(todo.IsDone ? "text-muted strike": string.Empty)>@todo.Title</span>
+                    <button class="btn btn-xs btn-warning pull-right">
+                        <span class="glyphicon glyphicon-trash" @onclick(async () => await DeleteTodoAsync(todo))></span>
+                    </button>
                 </span>
             }
         </div>
@@ -31,35 +34,43 @@
 
 @functions
 {
-private bool IsDisplayDone = false;
+    private bool IsDisplayDone = false;
 
-private List<TodoItem> Todos { get; set; } = new List<TodoItem>();
+    private List<TodoItem> Todos { get; set; } = new List<TodoItem>();
 
 
-protected override async Task OnInitAsync()
-{
-
-    Todos = (await TodoManager.GetTodosAsync())?.ToList();
-}
-
-private string newTodo;
-
-private async Task ToggleCompleteTodoAsync(TodoItem todo)
-{
-    await TodoManager.ToggleCompleteTodoAsync(todo);
-
-}
-
-private async Task AddTodoAsync()
-{
-    if (!String.IsNullOrWhiteSpace(newTodo))
+    protected override async Task OnInitAsync()
     {
-        var newItem = await TodoManager.AddTodoAsync(newTodo);
-        newTodo = "";
-        Todos.Add(newItem);
 
-        //hackish way of forcing the UI to re-draw; the flight details sample illustrates using a state manager service for this type of thing
-        StateHasChanged();
+        Todos = (await TodoManager.GetTodosAsync())?.ToList();
     }
-}
+
+    private string newTodo;
+
+    private async Task ToggleCompleteTodoAsync(TodoItem todo)
+    {
+        await TodoManager.ToggleCompleteTodoAsync(todo);
+    }
+
+    private async Task DeleteTodoAsync(TodoItem todo)
+    {
+        if(await TodoManager.DeleteTodoAsync(todo))
+        {
+            Todos.Remove(todo);
+            StateHasChanged();
+        }
+    }
+
+    private async Task AddTodoAsync()
+    {
+        if (!String.IsNullOrWhiteSpace(newTodo))
+        {
+            var newItem = await TodoManager.AddTodoAsync(newTodo);
+            newTodo = "";
+            Todos.Add(newItem);
+
+            //hackish way of forcing the UI to re-draw; the flight details sample illustrates using a state manager service for this type of thing
+            StateHasChanged();
+        }
+    }
 }
