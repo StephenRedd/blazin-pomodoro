@@ -65,7 +65,7 @@
     }
 }
 
-/* 
+/*
     Temporary workaround due to the <blazor-component> wrapper element. The wrapper element
     will be eliminated in a future update, making this workaround unnecessary.
 */
@@ -93,4 +93,11 @@
 
 .alert-survey a {
     font-weight: bold;
+}
+.glyphicon-hide {
+    color: transparent;
+}
+
+.strike {
+    text-decoration: line-through;
 }

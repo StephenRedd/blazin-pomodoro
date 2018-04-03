@@ -1,14 +1,14 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Blazor.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
-using System.Linq;
-using System.Net.Mime;
 
 namespace BlazinPomodoro.Server
 {
@@ -28,7 +28,7 @@ namespace BlazinPomodoro.Server
                 options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
                 {
                     MediaTypeNames.Application.Octet,
-                    WasmMediaTypeNames.Application.Wasm,
+                    WasmMediaTypeNames.Application.Wasm
                 });
             });
         }
@@ -43,10 +43,7 @@ namespace BlazinPomodoro.Server
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
-            });
+            app.UseMvc(routes => { routes.MapRoute("default", "{controller}/{action}/{id?}"); });
 
             app.UseBlazor<Client.Program>();
         }

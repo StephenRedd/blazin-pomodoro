@@ -1,0 +1,65 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Threading.Tasks
+@using BlazinPomodoro.Shared
+
+@inject TodoManager TodoManager
+
+<div class="panel panel-default">
+    <div class="panel-heading">Tasks</div>
+
+    <div class="panel-body">
+        <div class="list-group">
+            @foreach (var todo in Todos.OrderBy(t => t.IsDone).ThenByDescending(t => t.CompletedOn).ThenBy(t => t.CreatedOn))
+            {
+                <span class="list-group-item clearfix">
+
+                    <button class=@(todo.IsDone ?  "btn btn-xs btn-success" :  "btn btn-xs btn-warning") @onclick(async () => await ToggleCompleteTodoAsync(todo))>
+                        <span class=@(todo.IsDone ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-ok glyphicon-hide")></span>
+                    </button>
+                    <span class=@(todo.IsDone ? "text-muted strike": string.Empty)>@todo.Title</span>
+                </span>
+            }
+        </div>
+    </div>
+    <div class="panel-footer">
+        <input placeholder="Something todo" @bind(newTodo) />
+        <button @onclick(async () => await AddTodoAsync())>Add todo</button>
+    </div>
+</div>
+
+@functions
+{
+private bool IsDisplayDone = false;
+
+private List<TodoItem> Todos { get; set; } = new List<TodoItem>();
+
+
+protected override async Task OnInitAsync()
+{
+
+    Todos = (await TodoManager.GetTodosAsync())?.ToList();
+}
+
+private string newTodo;
+
+private async Task ToggleCompleteTodoAsync(TodoItem todo)
+{
+    await TodoManager.ToggleCompleteTodoAsync(todo);
+
+}
+
+private async Task AddTodoAsync()
+{
+    if (!String.IsNullOrWhiteSpace(newTodo))
+    {
+        var newItem = await TodoManager.AddTodoAsync(newTodo);
+        newTodo = "";
+        Todos.Add(newItem);
+
+        //hackish way of forcing the UI to re-draw; the flight details sample illustrates using a state manager service for this type of thing
+        StateHasChanged();
+    }
+}
+}

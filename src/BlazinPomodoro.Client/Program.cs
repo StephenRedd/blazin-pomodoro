@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Blazor.Browser.Rendering;
 using Microsoft.AspNetCore.Blazor.Browser.Services;
-using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazinPomodoro.Client
 {
     public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var serviceProvider = new BrowserServiceProvider(configure =>
-            {
-                // Add any custom services here
-            });
+            var serviceProvider = new BrowserServiceProvider(configure => { configure.AddSingleton<TodoManager>(); });
 
             new BrowserRenderer(serviceProvider).AddComponent<App>("app");
         }

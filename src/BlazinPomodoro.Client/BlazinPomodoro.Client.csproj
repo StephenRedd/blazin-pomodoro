@@ -25,7 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Components\TodoList.cshtml" />
     <None Include="Pages\Todo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\TodoList.cshtml" />
   </ItemGroup>
 
 </Project>
