@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BlazinPomodoro.Shared;
 using Microsoft.AspNetCore.Blazor;
 
-namespace BlazinPomodoro.Client
+namespace BlazinPomodoro.Client.Services
 {
     public class TodoManager
     {

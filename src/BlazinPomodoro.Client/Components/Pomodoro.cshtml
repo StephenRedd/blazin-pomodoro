@@ -1,0 +1,35 @@
+﻿@using System
+@using System.Threading
+@using BlazinPomodoro.Shared
+<div class="panel panel-default">
+    <div class="panel-heading">Pomodoro</div>
+
+    <div class="panel-body">
+        Time Remaining: @Timer.TimeRemaining
+
+        <button class="btn btn-xs btn-warning" type="button" @onclick(Timer.Start)>Start</button>
+        <button class="btn btn-xs btn-warning" type="button" @onclick(Timer.Pause)>Pause</button>
+        <button class="btn btn-xs btn-warning" type="button" @onclick(Timer.Reset)>Stop</button>
+
+    </div>
+</div>
+
+@functions
+{
+    protected override async Task OnInitAsync()
+    {
+        Timer = new PomodoroTimer("main", Elapsed, Expired);
+        await Task.CompletedTask;
+    }
+
+    private PomodoroTimer Timer { get; set; }
+
+    private void Elapsed()
+    {
+        StateHasChanged();
+    }
+
+    private void Expired()
+    {
+    }
+}

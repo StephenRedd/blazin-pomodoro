@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Blazor.Browser.Rendering;
+﻿using BlazinPomodoro.Client.Services;
+using Microsoft.AspNetCore.Blazor.Browser.Rendering;
 using Microsoft.AspNetCore.Blazor.Browser.Services;
 using Microsoft.Extensions.DependencyInjection;
 
