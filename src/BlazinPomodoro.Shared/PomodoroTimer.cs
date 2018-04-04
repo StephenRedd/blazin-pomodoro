@@ -5,17 +5,24 @@ namespace BlazinPomodoro.Shared
 {
     public class PomodoroTimer
     {
-        public PomodoroTimer(string timerName, Action elapsedCallback, Action expiredCallback)
+        public PomodoroTimer(string timerName, Action elapsedCallback, Action expiredCallback,
+            double pomodoroLength = 25d)
         {
-            PomodoroInfo = new PomodoroInfo { Id = timerName };
+            PomodoroInfo = new PomodoroInfo
+            {
+                Id = timerName,
+                State = PomodoroTimerState.Stopped,
+                PomodoroLength = pomodoroLength
+            };
             ElapsedCallback = elapsedCallback;
             ExpiredCallback = expiredCallback;
-            Timer = new Timer(1000)
+            Timer = new Timer(500)
             {
                 AutoReset = true
             };
             Timer.Elapsed += TimerOnElapsed;
         }
+
 
         private Action ElapsedCallback { get; }
 
@@ -29,20 +36,24 @@ namespace BlazinPomodoro.Shared
 
         public bool IsExpired => PomodoroInfo.State == PomodoroTimerState.Expired;
 
-        public string TimeRemaining => PomodoroInfo.State == PomodoroTimerState.Paused
-            ? ((PomodoroInfo.ExpiresAt ?? (PomodoroInfo.PausedAt ?? DateTimeOffset.Now)) - (PomodoroInfo.PausedAt ?? DateTimeOffset.Now)).ToString(@"mm\:ss")
-            : ((PomodoroInfo.ExpiresAt ?? DateTimeOffset.Now) - DateTimeOffset.Now).ToString(@"mm\:ss");
+        public string TimeRemaining =>
+            PomodoroInfo.State == PomodoroTimerState.Expired
+                ? "00:00"
+                : PomodoroInfo.State == PomodoroTimerState.Paused
+                    ? ((PomodoroInfo.ExpiresAt ?? (PomodoroInfo.PausedAt ?? DateTimeOffset.Now)) -
+                       (PomodoroInfo.PausedAt ?? DateTimeOffset.Now)).ToString(@"mm\:ss")
+                    : ((PomodoroInfo.ExpiresAt ?? DateTimeOffset.Now.AddMinutes(PomodoroInfo.PomodoroLength)) -
+                       DateTimeOffset.Now).ToString(@"mm\:ss");
 
         public void Start()
         {
             switch (PomodoroInfo.State)
             {
                 case PomodoroTimerState.Stopped:
-                    PomodoroInfo.ExpiresAt = DateTimeOffset.Now.AddMinutes(25);
+                case PomodoroTimerState.Expired:
+                    PomodoroInfo.ExpiresAt = DateTimeOffset.Now.AddMinutes(PomodoroInfo.PomodoroLength);
                     break;
                 case PomodoroTimerState.Running:
-                case PomodoroTimerState.Expired:
-                    //do nothing
                     return;
                 case PomodoroTimerState.Paused:
                     if (PomodoroInfo.ExpiresAt.HasValue && PomodoroInfo.PausedAt.HasValue)
@@ -54,6 +65,7 @@ namespace BlazinPomodoro.Shared
                     {
                         throw new InvalidOperationException();
                     }
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -102,7 +114,10 @@ namespace BlazinPomodoro.Shared
 
             if (IsExpired)
             {
+                PomodoroInfo.PausedAt = null;
+                PomodoroInfo.ExpiresAt = null;
                 ExpiredCallback?.Invoke();
+                Timer.Stop();
             }
         }
     }

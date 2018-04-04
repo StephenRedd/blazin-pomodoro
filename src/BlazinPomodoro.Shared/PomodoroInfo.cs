@@ -10,5 +10,8 @@ namespace BlazinPomodoro.Shared {
         public DateTimeOffset? ExpiresAt { get; set; }
 
         public PomodoroTimerState State { get; set; }
+
+        public double PomodoroLength { get; set; }
+
     }
 }

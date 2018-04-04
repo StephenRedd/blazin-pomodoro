@@ -1,35 +1,80 @@
 ﻿@using System
-@using System.Threading
 @using BlazinPomodoro.Shared
+@using Microsoft.AspNetCore.Blazor.Browser.Interop
 <div class="panel panel-default">
-    <div class="panel-heading">Pomodoro</div>
+    <div class="panel-heading">
+        <h3 class="panel-title">Pomodoro Countdown Timer</h3>
+    </div>
 
-    <div class="panel-body">
-        Time Remaining: @Timer.TimeRemaining
-
-        <button class="btn btn-xs btn-warning" type="button" @onclick(Timer.Start)>Start</button>
-        <button class="btn btn-xs btn-warning" type="button" @onclick(Timer.Pause)>Pause</button>
-        <button class="btn btn-xs btn-warning" type="button" @onclick(Timer.Reset)>Stop</button>
-
+    <div class=@((Timer.Status == PomodoroTimerState.Expired) ? "panel-body form-inline alert-danger" : "panel-body form-inline")>
+        <div class="form-group">
+            <p class="form-control-static timer-display">@Timer.TimeRemaining</p>
+        </div>
+        <button class=@((Timer.Status != PomodoroTimerState.Running) ? "btn btn-primary" :"btn btn-warning" ) type="button" @onclick(Timer.Start)>
+            <span class="glyphicon glyphicon-play"></span>
+        </button>
+        <button class=@((Timer.Status == PomodoroTimerState.Running) ? "btn btn-primary" :"btn btn-warning" ) type="button" @onclick(Timer.Pause)>
+            <span class="glyphicon glyphicon-pause"></span>
+        </button>
+        <button class=@((Timer.Status != PomodoroTimerState.Stopped) ? "btn btn-primary" :"btn btn-warning" ) type="button" @onclick(Timer.Reset)>
+            <span class="glyphicon glyphicon-stop"></span>
+        </button>
+    </div>
+    <div class="panel-footer">
+        <div class="form-inline small text-muted clearfix">
+            <div class="pull-right">
+                <div class="form-group">
+                    <label class="control-label">Pomorodo Length</label>
+                    <input class="form-control input-sm" type="number" @bind(pomodoroLength) />
+                </div>
+                <button class="btn btn-default btn-sm" @onclick(ApplyCheats)>Apply</button>
+            </div>
+        </div>
     </div>
 </div>
+<audio id="audio" src="alert.mp3"></audio>
+<script>
 
+    Blazor.registerFunction('playAlert', () => {
+
+        var audio = document.getElementById("audio");
+        audio.load();
+        audio.play();
+        return true;
+    });
+
+</script>
 @functions
 {
-    protected override async Task OnInitAsync()
-    {
-        Timer = new PomodoroTimer("main", Elapsed, Expired);
-        await Task.CompletedTask;
-    }
+protected override async Task OnInitAsync()
+{
+    Timer = new PomodoroTimer("main", Elapsed, Expired);
+    await Task.CompletedTask;
+}
 
-    private PomodoroTimer Timer { get; set; }
+private PomodoroTimer Timer { get; set; }
 
-    private void Elapsed()
-    {
-        StateHasChanged();
-    }
+private string pomodoroLength = "25";
 
-    private void Expired()
+private void Elapsed()
+{
+    StateHasChanged();
+}
+
+private void Expired()
+{
+    Console.Write("play noise!");
+    RegisteredFunction.Invoke<bool>("playAlert");
+    StateHasChanged();
+}
+
+private void ApplyCheats()
+{
+    if (Double.TryParse(pomodoroLength, out var pl))
     {
+        Timer.Reset();
+        Timer = new PomodoroTimer("main", Elapsed, Expired, pl);
     }
+}
+
 }

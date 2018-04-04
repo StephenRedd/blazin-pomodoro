@@ -101,3 +101,19 @@
 .strike {
     text-decoration: line-through;
 }
+
+button,
+button:active,
+button:focus,
+button:hover,
+.btn,
+.btn:active,
+.btn:focus,
+.btn:hover {
+    outline: none !important;
+}
+
+.timer-display {
+    font-size:30pt;
+    font-family: monospace;
+}

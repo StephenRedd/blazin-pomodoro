@@ -17,17 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <BlazorGenerate Remove="Pages\Todo.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\Todo.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Components\Pomodoro.cshtml" />
     <None Include="Components\TodoList.cshtml" />
-    <None Include="Pages\Todo.cshtml" />
+    <None Include="Pages\About.cshtml" />
+    <None Include="wwwroot\alert.mp3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +33,14 @@
 
   <ItemGroup>
     <Content Remove="Components\Pomodoro.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\About.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\About.cshtml" />
   </ItemGroup>
 
 </Project>
