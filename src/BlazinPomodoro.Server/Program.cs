@@ -19,6 +19,7 @@ namespace BlazinPomodoro.Server
             return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(new ConfigurationBuilder()
                     .AddCommandLine(args)
+                    .AddJsonFile("appsettings.json")
                     .Build())
                 .UseStartup<Startup>()
                 .Build();

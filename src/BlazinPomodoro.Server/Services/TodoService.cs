@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using BlazinPomodoro.Shared;
 using LiteDB;
+using Microsoft.Extensions.Logging;
 
 namespace BlazinPomodoro.Server.Services
 {
@@ -10,9 +11,15 @@ namespace BlazinPomodoro.Server.Services
     {
         private readonly string _dbPath = Path.Combine(Directory.GetCurrentDirectory(), "app_data");
 
+        private Logger _dbLogger = null;
+
         private string DbFile => Path.Combine(_dbPath, "bp.db");
-        public TodoService()
+
+        private LiteRepository GetRepository() => new LiteRepository(new LiteDatabase(DbFile, null, _dbLogger));
+
+        public TodoService(ILogger<TodoService> logger)
         {
+            _dbLogger = new Logger(Logger.FULL, (s) => { logger.LogDebug(s); });
             if (!Directory.Exists(_dbPath))
             {
                 Directory.CreateDirectory(_dbPath);
@@ -21,16 +28,15 @@ namespace BlazinPomodoro.Server.Services
 
         public TodoItem GetItem(Guid id)
         {
-            using (var db = new LiteDatabase(DbFile))
+            using (var db = GetRepository())
             {
-                var col = db.GetCollection<TodoItem>("TodoItems");
-                return col.FindById(id);
+                return db.SingleById<TodoItem>(id);
             }
         }
 
         public bool SaveItem(TodoItem item)
         {
-            using (var db = new LiteRepository(DbFile))
+            using (var db = GetRepository())
             {
                 return db.Upsert(item);
             }
@@ -38,7 +44,7 @@ namespace BlazinPomodoro.Server.Services
 
         public bool DeleteItem(Guid id)
         {
-            using (var db = new LiteRepository(DbFile))
+            using (var db = GetRepository())
             {
                 return db.Delete<TodoItem>(i => i.Id == id) > 0;
             }
@@ -46,7 +52,7 @@ namespace BlazinPomodoro.Server.Services
 
         public IEnumerable<TodoItem> GetAllItems()
         {
-            using (var db = new LiteRepository(DbFile))
+            using (var db = GetRepository())
             {
                return db.Query<TodoItem>().ToEnumerable();
             }

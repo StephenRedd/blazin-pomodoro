@@ -35,6 +35,7 @@ namespace BlazinPomodoro.Client
 
         public async Task<bool> DeleteTodoAsync(TodoItem item)
         {
+            Console.WriteLine($"Deleting {item.Title} with ID {item.Id}");
             var result = await Client.DeleteAsync($"api/todos/{item.Id}");
             return result.IsSuccessStatusCode;
         }
